@@ -1,0 +1,32 @@
+title: 'Liste des paramètres'
+
+breadcrumb:
+    index:
+        label: 'Liste des paramètres'
+        action: 'index'
+
+tablePanelProperties:
+    headerLabel: 'Liste des paramètres'
+    headerListButtons:
+        create:
+            buttonType: 'link'
+            color: 'success'
+            label: 'Créer un paramètre'
+            action: 'create'
+            modal: 'true'
+            size: 'xs'
+    tableFields:
+        buttons:
+            multipleFields:
+            update:
+                icon: 'pencil'
+                action: 'update'
+                modal: 'true'
+            delete:
+                icon: 'trash'
+                color: 'danger'
+                action: 'delete'
+                confirm: 'Êtes-vous sûr de vouloir supprimer ce paramètre ?'
+        id:
+        name:
+        value:

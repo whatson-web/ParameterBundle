@@ -1,0 +1,6 @@
+services:
+  wh_main.parameters.twig_extension:
+    class: WH\ParameterBundle\Twig\ParameterExtension
+    arguments: ['@service_container']
+    tags:
+      - { name: twig.extension }

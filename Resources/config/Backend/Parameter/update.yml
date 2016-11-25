@@ -1,0 +1,19 @@
+modal: 'true'
+
+view: 'WHParameterBundle:Backend/Parameter:modal.html.twig'
+
+title: 'Editer un paramètre'
+
+formFields:
+    - name
+    - slug
+    - type
+    - valueString
+    - valueText
+    - valueLink
+
+footerFormFields:
+    save:
+        label: 'Enregistrer'
+        field: 'save'
+        color: 'success'

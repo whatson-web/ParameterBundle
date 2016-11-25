@@ -1,0 +1,17 @@
+title: 'Créer un paramètre'
+
+view: 'WHParameterBundle:Backend/Parameter:modal.html.twig'
+
+formFields:
+    - name
+    - slug
+    - type
+    - valueString
+    - valueText
+    - valueLink
+
+footerFormFields:
+    create:
+        label: 'Créer'
+        field: 'create'
+        color: 'success'

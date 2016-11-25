@@ -1,0 +1,50 @@
+actions:
+    index:
+        route: 'bk_wh_parameter_parameter_index'
+    create:
+        route: 'bk_wh_parameter_parameter_create'
+    update:
+        route: 'bk_wh_parameter_parameter_update'
+        parameters:
+            id: 'id'
+    delete:
+        route: 'bk_wh_parameter_parameter_delete'
+        parameters:
+            id: 'id'
+
+formFields:
+    name:
+        label: 'Nom'
+        field: 'name'
+        type: 'text'
+    slug:
+        label: 'Nom technique'
+        field: 'slug'
+        type: 'text'
+    type:
+        label: 'Type'
+        field: 'type'
+        type: 'choice'
+        options:
+            type: 'static'
+            field: 'types'
+    value:
+        label: 'Valeur'
+        field: 'value'
+        type: 'text'
+    valueString:
+        label: 'Valeur courte'
+        field: 'valueString'
+        type: 'text'
+    valueText:
+        label: 'Valeur longue'
+        field: 'valueText'
+        type: 'textarea'
+    valueLink:
+        label: 'URL'
+        field: 'valueLink'
+        type: 'text'
+
+menus:
+    main: 'backend-menu'
+    right: 'backend-menu-right'

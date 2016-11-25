@@ -1,0 +1,21 @@
+{
+  "name": "whatson-web/parameter-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony - Whatson Web - ParameterBundle",
+  "homepage": "https://github.com/whatson-web/ParameterBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Whatson Web - Developers",
+      "email": "dev@whatson-web.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "WH\\ParameterBundle\\": ""
+    }
+  }
+}
