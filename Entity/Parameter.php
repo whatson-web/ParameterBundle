@@ -19,9 +19,10 @@ class Parameter
 	 * @var array
 	 */
 	public static $types = array(
-		'string' => 'Valeur courte',
-		'text'   => 'Valeur longue',
-		'link'   => 'Lien',
+		'string'        => 'Valeur courte',
+		'text'          => 'Valeur longue',
+		'internal-link' => 'Lien interne',
+		'external-link' => 'Lien externe',
 	);
 
 	/**
@@ -144,7 +145,11 @@ class Parameter
 				$value = $this->getValueText();
 				break;
 
-			case 'link':
+			case 'internal-link':
+				$value = $this->getValueLink();
+				break;
+
+			case 'external-link':
 				$value = $this->getValueLink();
 				break;
 		}

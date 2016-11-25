@@ -1,5 +1,7 @@
 title: 'Liste des paramètres'
 
+view: 'WHParameterBundle:Backend/Parameter:index.html.twig'
+
 breadcrumb:
     index:
         label: 'Liste des paramètres'

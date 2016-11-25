@@ -1,0 +1,168 @@
+{% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
+
+{% block title %}<h1>{{ title }}</h1>{% endblock %}
+
+{% block breadcrumb %}
+    {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="wh-panel panel {{ 'panel-default' }}">
+
+        <div class="panel-heading">
+
+            <table>
+                <tr>
+                    <td>
+                        <span>{% if tablePanelProperties.icon is defined %}<i
+                                class="{{ 'fa fa-' ~ tablePanelProperties.icon }}"></i> {% endif %}{{ tablePanelProperties.headerLabel }}</span>
+                    </td>
+                    {% if tablePanelProperties.headerListButtons is defined %}
+                        <td class="right">
+                            {{ macros.listButtons(tablePanelProperties.headerListButtons) }}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+
+        <div class="panel-body">
+            {% if tablePanelProperties.tableFields is defined %}
+
+                <table class="wh-table table table-striped">
+
+                    <thead>
+                    <tr>
+                        {% for name in tablePanelProperties.tableFields %}
+                            <th>{% if name.label is defined %}{{ name.label }}{% endif %}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+
+                    {% for entity in tablePanelProperties.entities %}
+
+                        {% set trClass = '' %}
+
+                        {% if attribute(entity, 'status') is defined %}
+                            {% if attribute(entity, 'status') == 0 %}
+                                {% set trClass = 'danger' %}
+                            {% else %}
+                                {% set trClass = 'success' %}
+                            {% endif %}
+                        {% endif %}
+
+                        <tr class="{{ trClass }}"
+                            {% if properties.sortable is defined %}data-id="{{ entity.id }}"{% endif %}>
+                            {% for property, value in tablePanelProperties.tableFields %}
+
+                                {% if value.multipleFields is defined %}
+
+                                    {% set entityButtons = [] %}
+
+                                    {% for key, entityButton in value %}
+
+                                        {% if key != 'multipleFields' %}
+
+                                            {% set entityButton = entityButton | merge({'buttonType' : 'link'}) %}
+                                            {% set entityButton = entityButton | merge({'size' : 'xs'}) %}
+
+                                            {% if entityButton.parameters is defined %}
+
+                                                {% set entityRouteParams = [] %}
+
+                                                {% for routeParamName, routeParam in entityButton.parameters %}
+
+                                                    {% set routeParamFields = routeParam | split('.') %}
+                                                    {% set routeParamValue = '' %}
+
+                                                    {% for routeParamField in routeParamFields %}
+
+                                                        {% if loop.first %}
+                                                            {% set routeParamValue = attribute(entity, routeParamField) %}
+                                                        {% else %}
+                                                            {% set routeParamValue = attribute(routeParamValue, routeParamField) %}
+                                                        {% endif %}
+
+                                                    {% endfor %}
+
+                                                    {% set entityRouteParam = routeParamValue %}
+
+                                                    {% set entityRouteParams = entityRouteParams | merge({(routeParamName) : entityRouteParam}) %}
+
+                                                {% endfor %}
+
+                                                {% set entityButton = entityButton | merge({'href' : path(entityButton.route, entityRouteParams)}) %}
+
+                                            {% endif %}
+
+                                            {% set entityButtons = entityButtons | merge([entityButton]) %}
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                    <td>{{ macros.listButtons(entityButtons) }}</td>
+
+                                {% else %}
+
+                                    {% if property == 'value' %}
+
+                                        {% if entity.type == 'string' %}
+                                            <td>{{ entity.valueString }}</td>
+                                        {% elseif entity.type == 'text' %}
+                                            <td>{{ entity.valueText | nl2br }}</td>
+                                        {% elseif entity.type == 'internal-link' %}
+                                            <td>
+                                                <a href="{{ path('ft_wh_seo_router_dispatch', {'url': entity.valueLink}) }}"
+                                                   target="_blank">
+                                                    {{ entity.valueLink }}
+                                                </a>
+                                            </td>
+                                        {% elseif entity.type == 'external-link' %}
+                                            <td>
+                                                <a href="{{ entity.valueLink }}" target="_blank">
+                                                    {{ entity.valueLink }}
+                                                </a>
+                                            </td>
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        {% if value.type is defined and value.type == 'link' %}
+                                            {% set entityValue = macros.getValueOfEntity(entity, property) %}
+                                            {% if not (entityValue matches '#http://.*#') %}
+                                                {% set entityValue = path('ft_wh_seo_router_dispatch', {'url' : entityValue}) %}
+                                            {% endif %}
+                                            <td>
+                                                <a href="{{ entityValue }}" target="_blank">
+                                                    {{ macros.getValueOfEntity(entity, property) }}
+                                                </a>
+                                            </td>
+                                        {% else %}
+
+                                            {% if value.type is defined and value.type == 'boolean' %}
+                                                <td>{% if macros.getValueOfEntity(entity, property) %}Oui{% else %}Non{% endif %}</td>
+                                            {% else %}
+                                                <td>{{ macros.getValueOfEntity(entity, property) }}</td>
+                                            {% endif %}
+
+                                        {% endif %}
+
+
+                                    {% endif %}
+
+                                {% endif %}
+
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+
+                </table>
+
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock %}

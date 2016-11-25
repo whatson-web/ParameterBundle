@@ -71,7 +71,16 @@ class ParameterExtension extends \Twig_Extension
 				return $parameter->getValueText();
 				break;
 
-			case 'link':
+			case 'internal-link':
+				return $this->container->get('router')->generate(
+					'ft_wh_seo_router_dispatch',
+					array(
+						'url' => $parameter->getValueLink(),
+					)
+				);
+				break;
+
+			case 'external-link':
 				return $parameter->getValueLink();
 				break;
 		}

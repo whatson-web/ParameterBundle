@@ -14,7 +14,7 @@ var manageType = function () {
     if (type == 'text') {
         $('#form_valueText').closest('.form-group').css('display', 'block');
     }
-    if (type == 'link') {
+    if (type == 'internal-link' || type == 'external-link') {
         $('#form_valueLink').closest('.form-group').css('display', 'block');
     }
 };
