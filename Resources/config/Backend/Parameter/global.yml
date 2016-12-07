@@ -46,5 +46,5 @@ formFields:
         type: 'text'
 
 menus:
-    main: 'backend-menu'
-    right: 'backend-menu-right'
+    main: 'backendMenu'
+    right: 'backendMenuRight'
