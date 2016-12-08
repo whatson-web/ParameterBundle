@@ -1,4 +1,4 @@
-title: 'Créer un paramètre'
+title: 'Create a parameter'
 
 view: 'WHParameterBundle:Backend/Parameter:modal.html.twig'
 
@@ -12,6 +12,6 @@ formFields:
 
 footerFormFields:
     create:
-        label: 'Créer'
+        label: 'Create'
         field: 'create'
         color: 'success'

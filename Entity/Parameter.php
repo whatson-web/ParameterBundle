@@ -19,10 +19,10 @@ class Parameter
 	 * @var array
 	 */
 	public static $types = array(
-		'string'        => 'Valeur courte',
-		'text'          => 'Valeur longue',
-		'internal-link' => 'Lien interne',
-		'external-link' => 'Lien externe',
+		'string'        => 'Short value',
+		'text'          => 'Long value',
+		'internal-link' => 'Internal link',
+		'external-link' => 'External link',
 	);
 
 	/**

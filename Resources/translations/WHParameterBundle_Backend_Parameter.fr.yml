@@ -1,0 +1,20 @@
+# Index
+Parameters list: 'Liste des paramètres'
+Name: 'Nom'
+Value: 'Valeur'
+Create a parameter: 'Créer un paramètre'
+Do you really want to delete this parameter ?: 'Êtes-vous sûr de vouloir supprimer ce paramètre ?'
+
+# Create
+Technical name: 'Nom technique'
+Type: 'Type'
+Short value: 'Valeur courte'
+Long value: 'Valeur longue'
+Internal link: 'Lien interne'
+External link: 'Lien externe'
+URL: 'URL'
+Create: 'Créer'
+
+# Update
+Edit a parameter: 'Editer un paramètre'
+Save: 'Enregistrer'

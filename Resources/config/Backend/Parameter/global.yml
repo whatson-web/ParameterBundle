@@ -14,11 +14,11 @@ actions:
 
 formFields:
     name:
-        label: 'Nom'
+        label: 'Name'
         field: 'name'
         type: 'text'
     slug:
-        label: 'Nom technique'
+        label: 'Technical name'
         field: 'slug'
         type: 'text'
     type:
@@ -29,15 +29,15 @@ formFields:
             type: 'static'
             field: 'types'
     value:
-        label: 'Valeur'
+        label: 'Value'
         field: 'value'
         type: 'text'
     valueString:
-        label: 'Valeur courte'
+        label: 'Short value'
         field: 'valueString'
         type: 'text'
     valueText:
-        label: 'Valeur longue'
+        label: 'Long value'
         field: 'valueText'
         type: 'textarea'
     valueLink:
