@@ -10,12 +10,18 @@ var manageType = function () {
 
     if (type == 'string') {
         $('#form_valueString').closest('.form-group').css('display', 'block');
+    } else {
+        $('#form_valueString').closest('.form-group').css('display', 'none');
     }
     if (type == 'text') {
         $('#form_valueText').closest('.form-group').css('display', 'block');
+    } else {
+        $('#form_valueText').closest('.form-group').css('display', 'none');
     }
     if (type == 'internal-link' || type == 'external-link') {
         $('#form_valueLink').closest('.form-group').css('display', 'block');
+    } else {
+        $('#form_valueLink').closest('.form-group').css('display', 'none');
     }
 };
 
