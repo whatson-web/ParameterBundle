@@ -1,6 +1,6 @@
 {% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
 
-{% block title %}<h1>{{ title }}</h1>{% endblock %}
+{% block title %}<h2>{{ title }}</h2>{% endblock %}
 
 {% block breadcrumb %}
     {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
@@ -8,26 +8,27 @@
 
 {% block body %}
 
-    <div class="ibox panel {{ 'panel-default' }}">
+    <div class="card">
 
-        <div class="ibox-title">
+        <div class="card-header">
 
             <table>
                 <tr>
                     <td>
-                        <span>{% if tablePanelProperties.icon is defined %}<i
-                                class="{{ 'fa fa-' ~ tablePanelProperties.icon }}"></i> {% endif %}{{ tablePanelProperties.headerLabel }}</span>
+                        <h2>{{ tablePanelProperties.headerLabel }}</h2>
                     </td>
                     {% if tablePanelProperties.headerListButtons is defined %}
                         <td class="right">
-                            {{ macros.listButtons(tablePanelProperties.headerListButtons) }}
+                            <div class="actions">
+                                {{ macros.listButtons(tablePanelProperties.headerListButtons) }}
+                            </div>
                         </td>
                     {% endif %}
                 </tr>
             </table>
         </div>
 
-        <div class="ibox-content">
+        <div class="card-body">
             {% if tablePanelProperties.tableFields is defined %}
 
                 <table class="wh-table table table-striped">
