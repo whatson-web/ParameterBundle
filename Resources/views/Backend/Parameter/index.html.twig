@@ -1,6 +1,6 @@
 {% extends '@WHBackendTemplate/BackendTemplate/Layout/layout.html.twig' %}
 
-{% block title %}<h2>{{ title }}</h2>{% endblock %}
+{% block title %}<h1>{{ title }}</h1>{% endblock %}
 
 {% block breadcrumb %}
     {% include '@WHBackendTemplate/BackendTemplate/Element/breadcrumb.html.twig' with {'breadcrumb': breadcrumb} %}
@@ -8,27 +8,26 @@
 
 {% block body %}
 
-    <div class="card">
+    <div class="ibox panel {{ 'panel-default' }}">
 
-        <div class="card-header">
+        <div class="ibox-title">
 
             <table>
                 <tr>
                     <td>
-                        <h2>{{ tablePanelProperties.headerLabel }}</h2>
+                        <span>{% if tablePanelProperties.icon is defined %}<i
+                                class="{{ 'fa fa-' ~ tablePanelProperties.icon }}"></i> {% endif %}{{ tablePanelProperties.headerLabel }}</span>
                     </td>
                     {% if tablePanelProperties.headerListButtons is defined %}
                         <td class="right">
-                            <div class="actions">
-                                {{ macros.listButtons(tablePanelProperties.headerListButtons) }}
-                            </div>
+                            {{ macros.listButtons(tablePanelProperties.headerListButtons) }}
                         </td>
                     {% endif %}
                 </tr>
             </table>
         </div>
 
-        <div class="card-body">
+        <div class="ibox-content">
             {% if tablePanelProperties.tableFields is defined %}
 
                 <table class="wh-table table table-striped">
@@ -113,6 +112,8 @@
                                             <td>{{ entity.valueString }}</td>
                                         {% elseif entity.type == 'text' %}
                                             <td>{{ entity.valueText | nl2br }}</td>
+                                        {% elseif entity.type == 'image' %}
+                                            <td>{{ entity | wh_thumb('image', 'default') }}</td>
                                         {% elseif entity.type == 'internal-link' %}
                                             <td>
                                                 <a href="{{ path('ft_wh_seo_router_dispatch', {'url': entity.valueLink}) }}"
