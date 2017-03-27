@@ -11,6 +11,7 @@ formFields:
     - valueString
     - valueText
     - valueLink
+    - image
 
 footerFormFields:
     save:

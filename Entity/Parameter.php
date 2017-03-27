@@ -14,267 +14,304 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Parameter
 {
+    /**
+     * Get value_string
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        $value = '';
 
-	/**
-	 * @var array
-	 */
-	public static $types = array(
-		'string'        => 'Short value',
-		'text'          => 'Long value',
-		'internal-link' => 'Internal link',
-		'external-link' => 'External link',
-	);
+        switch ($this->type) {
+            case 'string':
+                $value = $this->getValueString();
+                break;
 
-	/**
-	 * @return array
-	 */
-	public static function getTypes()
-	{
+            case 'text':
+                $value = $this->getValueText();
+                break;
 
-		return self::$types;
-	}
+            case 'internal-link':
+                $value = $this->getValueLink();
+                break;
 
-	/**
-	 * Parameter constructor.
-	 */
-	public function __construct()
-	{
-		$this->type = 'string';
-	}
+            case 'external-link':
+                $value = $this->getValueLink();
+                break;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
+            case 'image':
+                if ($this->getImage() && $this->getImage()->getUrl()) {
+                    $value = '<img src="' . $this->getImage()->getUrl() . '" alt="' . $this->getImage()->getAlt(
+                        ) . '" >';
+                }
+                break;
+        }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="slug", type="string", length=255)
-	 */
-	private $slug;
+        return $value;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="type", type="string", length=255)
-	 */
-	private $type;
+    /**
+     * @var array
+     */
+    public static $types = array(
+        'string'        => 'Short value',
+        'text'          => 'Long value',
+        'internal-link' => 'Internal link',
+        'external-link' => 'External link',
+        'image'         => 'Image',
+    );
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
-	 */
-	private $name;
+    /**
+     * @return array
+     */
+    public static function getTypes()
+    {
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="value_string", type="string", length=255, nullable=true)
-	 */
-	private $valueString;
+        return self::$types;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="value_link", type="string", length=255, nullable=true)
-	 */
-	private $valueLink;
+    /**
+     * Parameter constructor.
+     */
+    public function __construct()
+    {
+        $this->type = 'string';
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="value_text", type="text", nullable=true)
-	 */
-	private $valueText;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 *
-	 * @return Parameter
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
 
-		return $this;
-	}
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
 
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value_string", type="string", length=255, nullable=true)
+     */
+    private $valueString;
 
-	/**
-	 * Get value_string
-	 *
-	 * @return string
-	 */
-	public function getValue()
-	{
-		$value = '';
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value_link", type="string", length=255, nullable=true)
+     */
+    private $valueLink;
 
-		switch ($this->type) {
-			case 'string':
-				$value = $this->getValueString();
-				break;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value_text", type="text", nullable=true)
+     */
+    private $valueText;
 
-			case 'text':
-				$value = $this->getValueText();
-				break;
+    /**
+     * @ORM\ManyToOne(targetEntity="WH\MediaBundle\Entity\File", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $image;
 
-			case 'internal-link':
-				$value = $this->getValueLink();
-				break;
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-			case 'external-link':
-				$value = $this->getValueLink();
-				break;
-		}
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Parameter
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-		return $value;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set value_string
-	 *
-	 * @param string $valueString
-	 *
-	 * @return Parameter
-	 */
-	public function setValueString($valueString)
-	{
-		$this->valueString = $valueString;
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-		return $this;
-	}
+    /**
+     * Set value_string
+     *
+     * @param string $valueString
+     *
+     * @return Parameter
+     */
+    public function setValueString($valueString)
+    {
+        $this->valueString = $valueString;
 
-	/**
-	 * Get value_string
-	 *
-	 * @return string
-	 */
-	public function getValueString()
-	{
-		return $this->valueString;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set valueText
-	 *
-	 * @param string $valueText
-	 *
-	 * @return Parameter
-	 */
-	public function setValueText($valueText)
-	{
-		$this->valueText = $valueText;
+    /**
+     * Get value_string
+     *
+     * @return string
+     */
+    public function getValueString()
+    {
+        return $this->valueString;
+    }
 
-		return $this;
-	}
+    /**
+     * Set valueText
+     *
+     * @param string $valueText
+     *
+     * @return Parameter
+     */
+    public function setValueText($valueText)
+    {
+        $this->valueText = $valueText;
 
-	/**
-	 * Get valueText
-	 *
-	 * @return string
-	 */
-	public function getValueText()
-	{
-		return $this->valueText;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set valueLink
-	 *
-	 * @param string $valueLink
-	 *
-	 * @return Parameter
-	 */
-	public function setValueLink($valueLink)
-	{
-		$this->valueLink = $valueLink;
+    /**
+     * Get valueText
+     *
+     * @return string
+     */
+    public function getValueText()
+    {
+        return $this->valueText;
+    }
 
-		return $this;
-	}
+    /**
+     * Set image
+     *
+     * @param \WH\MediaBundle\Entity\File $image
+     *
+     * @return Parameter
+     */
+    public function setImage(\WH\MediaBundle\Entity\File $image = null)
+    {
+        $this->image = $image;
 
-	/**
-	 * Get valueLink
-	 *
-	 * @return string
-	 */
-	public function getValueLink()
-	{
-		return $this->valueLink;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set slug
-	 *
-	 * @param string $slug
-	 *
-	 * @return Parameter
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
+    /**
+     * Get image
+     *
+     * @return \WH\MediaBundle\Entity\File
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 
-		return $this;
-	}
+    /**
+     * Set valueLink
+     *
+     * @param string $valueLink
+     *
+     * @return Parameter
+     */
+    public function setValueLink($valueLink)
+    {
+        $this->valueLink = $valueLink;
 
-	/**
-	 * Get slug
-	 *
-	 * @return string
-	 */
-	public function getSlug()
-	{
-		return $this->slug;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set type
-	 *
-	 * @param string $type
-	 *
-	 * @return Parameter
-	 */
-	public function setType($type)
-	{
-		$this->type = $type;
+    /**
+     * Get valueLink
+     *
+     * @return string
+     */
+    public function getValueLink()
+    {
+        return $this->valueLink;
+    }
 
-		return $this;
-	}
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Parameter
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
-	/**
-	 * Get type
-	 *
-	 * @return string
-	 */
-	public function getType()
-	{
-		return $this->type;
-	}
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Parameter
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
 }

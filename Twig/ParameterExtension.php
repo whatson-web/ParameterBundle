@@ -12,88 +12,94 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 class ParameterExtension extends \Twig_Extension
 {
 
-	private $container;
+    private $container;
 
-	private $parameters = array();
+    private $parameters = array();
 
-	/**
-	 * ParameterExtension constructor.
-	 *
-	 * @param Container $container
-	 */
-	public function __construct(Container $container)
-	{
-		$this->container = $container;
+    /**
+     * ParameterExtension constructor.
+     *
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
 
-		$em = $this->container->get('doctrine')->getManager();
-		$parameters = $em->getRepository('WHParameterBundle:Parameter')->get(
-			'all'
-		);
-		foreach ($parameters as $parameter) {
-			$this->parameters[$parameter->getSlug()] = $parameter;
-		}
-	}
+        $em = $this->container->get('doctrine')->getManager();
+        $parameters = $em->getRepository('WHParameterBundle:Parameter')->get(
+            'all'
+        );
+        foreach ($parameters as $parameter) {
+            $this->parameters[$parameter->getSlug()] = $parameter;
+        }
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getFunctions()
-	{
-		return array(
-			new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
-		);
-	}
+    /**
+     * @return array
+     */
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
+        );
+    }
 
-	/**
-	 * @param $slug
-	 *
-	 * @return null|string
-	 */
-	public function getParameter($slug)
-	{
-		$parameter = null;
+    /**
+     * @param $slug
+     *
+     * @return null|string
+     */
+    public function getParameter($slug)
+    {
+        $parameter = null;
 
-		if (!empty($this->parameters[$slug])) {
-			$parameter = $this->parameters[$slug];
-		}
+        if (!empty($this->parameters[$slug])) {
+            $parameter = $this->parameters[$slug];
+        }
 
-		if (!$parameter) {
-			return 'Paramètre manquant : ' . $slug;
-		}
+        if (!$parameter) {
+            return 'Paramètre manquant : ' . $slug;
+        }
 
-		switch ($parameter->getType()) {
+        switch ($parameter->getType()) {
 
-			case 'string':
-				return $parameter->getValueString();
-				break;
+            case 'string':
+                return $parameter->getValueString();
+                break;
 
-			case 'text':
-				return $parameter->getValueText();
-				break;
+            case 'text':
+                return $parameter->getValueText();
+                break;
 
-			case 'internal-link':
-				return $this->container->get('router')->generate(
-					'ft_wh_seo_router_dispatch',
-					array(
-						'url' => $parameter->getValueLink(),
-					)
-				);
-				break;
+            case 'internal-link':
+                return $this->container->get('router')->generate(
+                    'ft_wh_seo_router_dispatch',
+                    array(
+                        'url' => $parameter->getValueLink(),
+                    )
+                );
+                break;
 
-			case 'external-link':
-				return $parameter->getValueLink();
-				break;
-		}
+            case 'external-link':
+                return $parameter->getValueLink();
+                break;
 
-		return null;
-	}
+            case 'image':
+                if ($parameter->getImage() && $parameter->getImage()->getUrl()) {
+                    return $this->container->getParameter('media.baseurl') . $parameter->getImage()->getUrl();
+                }
+                break;
+        }
 
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'parameter';
-	}
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'parameter';
+    }
 
 }

@@ -44,6 +44,10 @@ formFields:
         label: 'URL'
         field: 'valueLink'
         type: 'text'
+    image:
+        label: 'Image'
+        field: 'image'
+        type: 'wh_file'
 
 menus:
     main: 'backendMenu'
