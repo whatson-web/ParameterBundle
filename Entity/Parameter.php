@@ -67,8 +67,7 @@ class Parameter
      */
     public static function getTypes()
     {
-
-        return self::$types;
+        return array_flip(self::$types);
     }
 
     /**

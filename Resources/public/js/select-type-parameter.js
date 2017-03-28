@@ -1,4 +1,4 @@
-var ids = ['form_valueString', 'form_valueLink', 'form_valueText'];
+var ids = ['form_valueString', 'form_valueLink', 'form_valueText', 'form_image'];
 
 var manageType = function () {
 
@@ -22,6 +22,11 @@ var manageType = function () {
         $('#form_valueLink').closest('.form-group').css('display', 'block');
     } else {
         $('#form_valueLink').closest('.form-group').css('display', 'none');
+    }
+    if (type == 'image') {
+        $('#form_image').closest('.form-group').css('display', 'block');
+    } else {
+        $('#form_image').closest('.form-group').css('display', 'none');
     }
 };
 
