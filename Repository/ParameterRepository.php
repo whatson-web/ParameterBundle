@@ -11,13 +11,5 @@ use WH\LibBundle\Repository\BaseRepository;
  */
 class ParameterRepository extends BaseRepository
 {
-
-	/**
-	 * @return string
-	 */
-	public function getEntityNameQueryBuilder()
-	{
-		return 'parameter';
-	}
-
+    public $entityName = 'parameter';
 }

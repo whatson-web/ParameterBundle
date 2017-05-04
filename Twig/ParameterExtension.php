@@ -14,7 +14,7 @@ class ParameterExtension extends \Twig_Extension
 
     private $container;
 
-    private $parameters = array();
+    private $parameters = [];
 
     /**
      * ParameterExtension constructor.
@@ -39,9 +39,9 @@ class ParameterExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('getParameter', array($this, 'getParameter')),
-        );
+        return [
+            new \Twig_SimpleFunction('getParameter', [$this, 'getParameter']),
+        ];
     }
 
     /**
@@ -74,9 +74,9 @@ class ParameterExtension extends \Twig_Extension
             case 'internal-link':
                 return $this->container->get('router')->generate(
                     'ft_wh_seo_router_dispatch',
-                    array(
+                    [
                         'url' => $parameter->getValueLink(),
-                    )
+                    ]
                 );
                 break;
 

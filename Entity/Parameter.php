@@ -54,13 +54,13 @@ class Parameter
     /**
      * @var array
      */
-    public static $types = array(
+    public static $types = [
         'string'        => 'Short value',
         'text'          => 'Long value',
         'internal-link' => 'Internal link',
         'external-link' => 'External link',
         'image'         => 'Image',
-    );
+    ];
 
     /**
      * @return array
