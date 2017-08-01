@@ -42,8 +42,10 @@ class Parameter
 
             case 'image':
                 if ($this->getImage() && $this->getImage()->getUrl()) {
-                    $value = '<img src="' . $this->getImage()->getUrl() . '" alt="' . $this->getImage()->getAlt(
-                        ) . '" >';
+                    $value = '<img';
+                    $value .= 'src="' . $this->getImage()->getUrl() . '" ';
+                    $value .= 'alt="' . $this->getImage()->getAlt() . '" ';
+                    $value .= '>';
                 }
                 break;
         }
@@ -67,7 +69,7 @@ class Parameter
      */
     public static function getTypes()
     {
-        return array_flip(self::$types);
+        return self::$types;
     }
 
     /**
