@@ -3,6 +3,7 @@
 namespace WH\ParameterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Parameter
@@ -73,6 +74,14 @@ class Parameter
     }
 
     /**
+     * @param $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * Parameter constructor.
      */
     public function __construct()
@@ -113,6 +122,7 @@ class Parameter
     /**
      * @var string
      *
+     * @Gedmo\Translatable
      * @ORM\Column(name="value_string", type="string", length=255, nullable=true)
      */
     private $valueString;
@@ -120,6 +130,7 @@ class Parameter
     /**
      * @var string
      *
+     * @Gedmo\Translatable
      * @ORM\Column(name="value_link", type="string", length=255, nullable=true)
      */
     private $valueLink;
@@ -127,6 +138,7 @@ class Parameter
     /**
      * @var string
      *
+     * @Gedmo\Translatable
      * @ORM\Column(name="value_text", type="text", nullable=true)
      */
     private $valueText;
@@ -136,6 +148,11 @@ class Parameter
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
     private $image;
+
+    /**
+     * @Gedmo\Locale
+     */
+    private $locale;
 
     /**
      * Get id
